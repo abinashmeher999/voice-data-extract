@@ -1,6 +1,6 @@
 voice-data-extract
 ==================
-
+[![PyPI version](https://badge.fury.io/py/srtvoiceext.svg)](https://badge.fury.io/py/srtvoiceext)
 
 A command line interface to combine text information from subtitles with voice data in the video.
 Provides a convenient way to generate training data for speech-recognition purposes.

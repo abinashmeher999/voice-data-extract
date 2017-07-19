@@ -15,8 +15,24 @@ from setuptools import setup
 def setup_package():
     needs_sphinx = {'build_sphinx', 'upload_docs'}.intersection(sys.argv)
     sphinx = ['sphinx'] if needs_sphinx else []
-    setup(setup_requires=['six', 'pyscaffold>=2.5a0,<2.6a0'] + sphinx,
-          use_pyscaffold=True)
+    setup(
+        name='srtvoiceext',
+        packages=['srtvoiceext'],
+        version = '0.1.0',
+        description = 'A command line interface to combine text information from subtitles with voice data in the video.',
+        author = 'Abinash Meher',
+        author_email = 'abinashdakshana999+pypi@gmail.com',
+        url = 'http://github.com/abinashmeher999/voice-data-extract',
+        keywords = ['training-data', 'speech-recognition', 'speech-to-text'],
+        install_requires=['moviepy>=0.2.3,<1',
+                            'pysrt>=1.1.1,<2',
+                            'eyeD3-pip>=0.6.19,<1',
+                            'imageio>=2.1.2,<3',
+                            'mutagen>=1.38,<2',
+                            'shortuuid>=0.5.0,<1',
+                            'six>=1.10.0,<2'],
+        setup_requires=['six', 'pyscaffold>=2.5a0,<2.6a0'] + sphinx,
+        use_pyscaffold=True)
 
 
 if __name__ == "__main__":

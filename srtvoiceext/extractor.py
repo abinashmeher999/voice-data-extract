@@ -4,6 +4,7 @@ import string
 
 import itertools
 
+import six
 import imageio
 import moviepy.editor as mp
 import pysrt
@@ -41,29 +42,35 @@ def mkdir_p(path):
     Creates the directory structure if not already present
     :param path: The path to the directory, which you want to check for existence
         and create if necessary
+    :return True if the directory already exists
     """
     try:
         os.makedirs(path)
+        return False
     except OSError as exc:  # Python >2.5
         if exc.errno == errno.EEXIST and os.path.isdir(path):
-            pass
+            return True
         else:
             raise
 
 
-class Extractor(object):
-    def __init__(self, video_name=None, subtitle_name=None, relative_outdir='voice_data'):
+def extract(video_name=None, subtitle_name=None, relative_outdir='voice_data', logger=None):
         if video_name is None:
             raise ValueError('video file not specified')
         if subtitle_name is None:
             raise ValueError('subtitle file is not specified')
 
+        # Downloads ffmpeg binary if it is absent
         imageio.plugins.ffmpeg.download()
 
         video_path = os.path.join(os.getcwd(), video_name)
+        logger.info("video path: {}".format(video_path))
         subtitle_path = os.path.join(os.getcwd(), subtitle_name)
+        logger.info("subtitles path: {}".format(subtitle_path))
         output_path = os.path.join(os.getcwd(), relative_outdir)
-        mkdir_p(output_path)
+        logger.info("output path: {}".format(output_path))
+        if not mkdir_p(output_path):
+            logger.debug("Output directory created at {}".format(output_path))
 
         subs = pysrt.open(subtitle_path, encoding='utf-8')
 
@@ -80,16 +87,17 @@ class Extractor(object):
             audio_filename = "{}-{}-{}.mp3".format(num, format_filename(line.text[:100]),
                                                    suuid.ShortUUID().random(length=6))
             audio_filepath = os.path.join(output_path, audio_filename)
-            subclip.audio.write_audiofile(audio_filepath, verbose=False)
+            logger.info("Writing to {}.".format(audio_filepath))
+            subclip.audio.write_audiofile(audio_filepath, verbose=False, progress_bar=False)
 
             audio = EasyID3(audio_filepath)
             audio['title'] = line.text
             audio.save()
 
             while True:
-                print(line.text, end='')
+                six.print_(line.text, end='')
                 playsound(audio_filepath)
-                print("{}\t{}\t{}\t{}".format("y: Keep", "n: Delete", "r: Repeat", "q: Quit"))
+                six.print_("{}\t{}\t{}\t{}".format("y: Keep", "n: Delete", "r: Repeat", "q: Quit"))
                 cmd = getch()
                 if cmd in "yY":
                     break
@@ -102,4 +110,4 @@ class Extractor(object):
                     os.remove(audio_filepath)
                     return
                 else:
-                    print("Invalid input received please try again.")
+                    six.print_("Invalid input received please try again.")

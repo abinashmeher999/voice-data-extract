@@ -1,4 +1,4 @@
-from srtvoiceext import Extractor
+from srtvoiceext import extract
 
 if __name__ == '__main__':
-    ext = Extractor('video.mkv', 'subtitles.srt', 'outdir')
+    ext = extract('video.mkv', 'subtitles.srt', 'outdir')

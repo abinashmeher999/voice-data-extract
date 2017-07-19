@@ -21,29 +21,13 @@ import sys
 import logging
 
 from srtvoiceext import __version__
-from srtvoiceext import Extractor
+from srtvoiceext import extract
 
 __author__ = "Abinash Meher"
 __copyright__ = "Abinash Meher"
 __license__ = "mit"
 
 _logger = logging.getLogger(__name__)
-
-
-# def fib(n):
-#     """Fibonacci example function
-#
-#     Args:
-#       n (int): integer
-#
-#     Returns:
-#       int: n-th Fibonacci number
-#     """
-#     assert n > 0
-#     a, b = 1, 1
-#     for i in range(n-1):
-#         a, b = b, a+b
-#     return a
 
 
 def parse_args(args):
@@ -119,7 +103,8 @@ def main(args):
     args = parse_args(args)
     setup_logging(args.loglevel)
     # print("{} {} {}".format(args.video_filename, args.subtitles_filename, args.output_directory))
-    Extractor(args.video_filename, args.subtitles_filename, args.output_directory)
+    extract(args.video_filename, args.subtitles_filename, args.output_directory)
+
 
 def run():
     """Entry point for console_scripts

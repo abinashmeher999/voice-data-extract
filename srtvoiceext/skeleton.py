@@ -27,7 +27,7 @@ __author__ = "Abinash Meher"
 __copyright__ = "Abinash Meher"
 __license__ = "mit"
 
-_logger = logging.getLogger(__name__)
+_logger = logging.getLogger('srt_voice')
 
 
 def parse_args(args):
@@ -103,7 +103,7 @@ def main(args):
     args = parse_args(args)
     setup_logging(args.loglevel)
     # print("{} {} {}".format(args.video_filename, args.subtitles_filename, args.output_directory))
-    extract(args.video_filename, args.subtitles_filename, args.output_directory)
+    extract(args.video_filename, args.subtitles_filename, args.output_directory, _logger)
 
 
 def run():

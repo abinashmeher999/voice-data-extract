@@ -87,7 +87,6 @@ def extract(video_name=None, subtitle_name=None, relative_outdir='voice_data', l
             audio_filename = "{}-{}-{}.mp3".format(num, format_filename(line.text[:100]),
                                                    suuid.ShortUUID().random(length=6))
             audio_filepath = os.path.join(output_path, audio_filename)
-            logger.info("Writing to {}.".format(audio_filepath))
             subclip.audio.write_audiofile(audio_filepath, verbose=False, progress_bar=False)
 
             audio = EasyID3(audio_filepath)
@@ -95,19 +94,26 @@ def extract(video_name=None, subtitle_name=None, relative_outdir='voice_data', l
             audio.save()
 
             while True:
-                six.print_(line.text, end='')
+                logger.info(audio_filename)
+                six.print_(line.text, flush=True)
                 playsound(audio_filepath)
-                six.print_("{}\t{}\t{}\t{}".format("y: Keep", "n: Delete", "r: Repeat", "q: Quit"))
+                six.print_("[{}]  [{}]  [{}]  [{}]".format("y: Keep", "n: Delete", "r: Repeat", "q: Quit"), flush=True)
                 cmd = getch()
                 if cmd in "yY":
+                    six.print_("Kept as {}".format(audio_filename))
                     break
                 elif cmd in "nN":
                     os.remove(audio_filepath)
+                    six.print_("Removed.")
                     break
                 elif cmd in "rR":
+                    six.print_("------------------------------------------")
                     continue
                 elif cmd in "qQ":
                     os.remove(audio_filepath)
+                    six.print_("------------------------------------------")
                     return
                 else:
                     six.print_("Invalid input received please try again.")
+
+            six.print_("------------------------------------------")

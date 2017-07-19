@@ -20,7 +20,17 @@ example usage:
 $ srt_voice -fv video.mkv -fs subtitles.srt -o output_dir
 ```
 
-This then follows a series a prompts that allow you to decide to whether to keep or discard an audio clip.
+This then follows a series a prompts that allow you to decide to whether to keep or discard an audio clip. Like the one given below
+
+```
+I know what you are.
+
+
+[y: Keep]  [n: Delete]  [r: Repeat]  [q: Quit]
+Kept as 5-I_know_what_you_are-f3nKAy.mp3
+------------------------------------------
+```
+
 It creates the directory `output_dir` and nicely arranges the audio clips there.
 
 For more usage options:

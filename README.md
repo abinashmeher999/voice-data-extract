@@ -32,6 +32,7 @@ Kept as 5-I_know_what_you_are-f3nKAy.mp3
 ```
 
 It creates the directory `output_dir` and nicely arranges the audio clips there.
+**The training text (utf-8 encoded) is kept intact as the `title` attribute of the mp3 file.**
 
 For more usage options:
 ```bash

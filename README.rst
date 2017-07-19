@@ -16,6 +16,7 @@ It utilises the knowledge bank of annotated voice data we already have, **Subtit
 It reads the subtitles line by line and clips the audio from the video for the corresponding time interval.
 
 example usage:
+
 ```bash
 $ srt_voice -fv video.mkv -fs subtitles.srt -o output_dir
 ```
@@ -33,7 +34,9 @@ This has been possible because of the hard work of the maintainers of packages l
 
 Setup
 =====
-You will need Python 3, `audacious` music player
+You will need these
+- [Audacious Music Player](http://audacious-media-player.org/download)
+
 
 *This project has been set up using PyScaffold 2.5.7. For details and usage
 information on PyScaffold see http://pyscaffold.readthedocs.org/.*

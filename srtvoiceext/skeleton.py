@@ -6,22 +6,22 @@ console script. To run this script uncomment the following line in the
 entry_points section in setup.cfg:
 
     console_scripts =
-     fibonacci = srtvoiceext.skeleton:run
+     srt_voice = srtvoiceext.skeleton:run
 
-Then run `python setup.py install` which will install the command `fibonacci`
+Then run `python setup.py install` which will install the command `vdataext`
 inside your current environment.
 Besides console scripts, the header (i.e. until _logger...) of this file can
 also be used as template for Python modules.
 
 Note: This skeleton file can be safely removed if not needed!
 """
-from __future__ import division, print_function, absolute_import
 
 import argparse
 import sys
 import logging
 
 from srtvoiceext import __version__
+from srtvoiceext import Extractor
 
 __author__ = "Abinash Meher"
 __copyright__ = "Abinash Meher"
@@ -30,20 +30,20 @@ __license__ = "mit"
 _logger = logging.getLogger(__name__)
 
 
-def fib(n):
-    """Fibonacci example function
-
-    Args:
-      n (int): integer
-
-    Returns:
-      int: n-th Fibonacci number
-    """
-    assert n > 0
-    a, b = 1, 1
-    for i in range(n-1):
-        a, b = b, a+b
-    return a
+# def fib(n):
+#     """Fibonacci example function
+#
+#     Args:
+#       n (int): integer
+#
+#     Returns:
+#       int: n-th Fibonacci number
+#     """
+#     assert n > 0
+#     a, b = 1, 1
+#     for i in range(n-1):
+#         a, b = b, a+b
+#     return a
 
 
 def parse_args(args):
@@ -56,16 +56,11 @@ def parse_args(args):
       :obj:`argparse.Namespace`: command line parameters namespace
     """
     parser = argparse.ArgumentParser(
-        description="Just a Fibonnaci demonstration")
+        description="Given a video file and it's subtitles it helps extract voice data from it")
     parser.add_argument(
         '--version',
         action='version',
         version='voice-data-extract {ver}'.format(ver=__version__))
-    parser.add_argument(
-        dest="n",
-        help="n-th Fibonacci number",
-        type=int,
-        metavar="INT")
     parser.add_argument(
         '-v',
         '--verbose',
@@ -80,6 +75,27 @@ def parse_args(args):
         help="set loglevel to DEBUG",
         action='store_const',
         const=logging.DEBUG)
+    parser.add_argument(
+        '-fv',
+        '--video',
+        dest="video_filename",
+        required=True,
+        help="filename of the video"
+    )
+    parser.add_argument(
+        '-fs',
+        '--subtitles',
+        dest="subtitles_filename",
+        required=True,
+        help="filename of the video"
+    )
+    parser.add_argument(
+        '-o',
+        "--outdir",
+        dest="output_directory",
+        help="the directory in which the audio clips are going to be stored (default : ./voice_clips)",
+        default="voice_clips"
+    )
     return parser.parse_args(args)
 
 
@@ -102,10 +118,8 @@ def main(args):
     """
     args = parse_args(args)
     setup_logging(args.loglevel)
-    _logger.debug("Starting crazy calculations...")
-    print("The {}-th Fibonacci number is {}".format(args.n, fib(args.n)))
-    _logger.info("Script ends here")
-
+    # print("{} {} {}".format(args.video_filename, args.subtitles_filename, args.output_directory))
+    Extractor(args.video_filename, args.subtitles_filename, args.output_directory)
 
 def run():
     """Entry point for console_scripts

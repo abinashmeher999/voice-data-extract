@@ -26,7 +26,6 @@ def setup_package():
         keywords=['training-data', 'speech-recognition', 'speech-to-text'],
         install_requires=['moviepy==0.2.3.2',
                           'pysrt>=1.1.1,<2',
-                          'eyeD3-pip>=0.6.19,<1',
                           'imageio==2.1.2',
                           'mutagen==1.38',
                           'shortuuid>=0.5.0,<1',

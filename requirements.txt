@@ -4,7 +4,7 @@ eyeD3-pip==0.6.19
 imageio==2.1.2
 moviepy==0.2.3.2
 mutagen==1.38
-numpy==1.13.1
+numpy==1.22.0
 olefile==0.44
 Pillow==6.2.0
 pysrt==1.1.1
